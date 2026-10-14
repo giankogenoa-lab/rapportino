@@ -1,1 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
 
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.blocco-agente {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 8px;
+}
