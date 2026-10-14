@@ -1,10 +1,10 @@
 let agenti = [];
 
 fetch("agenti.json")
-.then(r => r.json())
-.then(dati => {
-    agenti = dati;
-});
+    .then(response => response.json())
+    .then(data => {
+        agenti = data;
+    });
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -18,17 +18,18 @@ function trovaRichiedente() {
 
     const cognome =
         document
-        .getElementById("cognomeRichiedente")
-        .value
-        .toUpperCase();
+            .getElementById("cognomeRichiedente")
+            .value
+            .toUpperCase();
 
     const agente =
         agenti.find(
             a => a.cognome === cognome
         );
 
-    if (!agente)
+    if (!agente) {
         return;
+    }
 
     document
         .getElementById("nomeRichiedente")
