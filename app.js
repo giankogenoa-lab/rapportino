@@ -6,9 +6,13 @@ fetch("agenti.json")
     agenti = dati;
 });
 
-document
-.getElementById("cognomeRichiedente")
-.addEventListener("change", trovaRichiedente);
+document.addEventListener("DOMContentLoaded", () => {
+
+    document
+        .getElementById("cognomeRichiedente")
+        .addEventListener("change", trovaRichiedente);
+
+});
 
 function trovaRichiedente() {
 
@@ -23,14 +27,14 @@ function trovaRichiedente() {
             a => a.cognome === cognome
         );
 
-    if(!agente)
+    if (!agente)
         return;
 
     document
-      .getElementById("nomeRichiedente")
-      .value = agente.nome;
+        .getElementById("nomeRichiedente")
+        .value = agente.nome;
 
     document
-      .getElementById("cidRichiedente")
-      .value = agente.cid;
+        .getElementById("cidRichiedente")
+        .value = agente.cid;
 }
