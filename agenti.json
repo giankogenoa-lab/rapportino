@@ -1,1 +1,12 @@
-
+[
+    {
+        "cognome": "GIANCOTTI",
+        "nome": "NICOLA",
+        "cid": "12345"
+    },
+    {
+        "cognome": "ROSSI",
+        "nome": "MARIO",
+        "cid": "98765"
+    }
+]
