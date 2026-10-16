@@ -64,8 +64,6 @@ if (contenitore.children.length === 0) {
         .value = agente.cid;
 }
 
-}
-
 function aggiungiAgente() {
 
     const contenitore =
