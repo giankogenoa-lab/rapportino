@@ -54,6 +54,8 @@ function aggiungiAgente() {
 
     div.innerHTML = `
 
+        <hr>
+
         <h3>Agente</h3>
 
         <label>Cognome</label>
@@ -66,8 +68,8 @@ function aggiungiAgente() {
         <input class="cidAgente" readonly>
 
         <label>Turno</label>
-        <select>
 
+        <select class="turno">
             <option>M</option>
             <option>M1</option>
             <option>M2</option>
@@ -77,38 +79,60 @@ function aggiungiAgente() {
             <option>N</option>
             <option>NI</option>
             <option>N3</option>
-
         </select>
 
         <label>Straordinario</label>
-        <input>
+        <input class="straordinario">
 
         <br><br>
 
-        <label><input type="checkbox"> ChRep</label>
-        <label><input type="checkbox"> ChDisp</label>
-        <label><input type="checkbox"> Trasferta</label>
-        <label><input type="checkbox"> Linea</label>
+        <label><input type="checkbox" class="chrep"> ChRep</label>
+        <label><input type="checkbox" class="chdisp"> ChDisp</label>
+        <label><input type="checkbox" class="trasferta"> Trasferta</label>
+        <label><input type="checkbox" class="linea"> Linea</label>
 
         <br>
 
-        <label><input type="checkbox"> Galleria</label>
-        <label><input type="checkbox"> Sost. Nocive</label>
-        <label><input type="checkbox"> Scorta</label>
-        <label><input type="checkbox"> TI</label>
+        <label><input type="checkbox" class="galleria"> Galleria</label>
+        <label><input type="checkbox" class="sostnocive"> Sost. Nocive</label>
+        <label><input type="checkbox" class="scorta"> Scorta</label>
+        <label><input type="checkbox" class="ti"> TI</label>
 
         <br><br>
 
         <button type="button"
             onclick="this.parentElement.remove()">
-
             Elimina
-
         </button>
 
-        <hr>
-
     `;
+
+    contenitore.appendChild(div);
+
+    const cognomeInput =
+        div.querySelector(".cognomeAgente");
+
+    cognomeInput.addEventListener("input", () => {
+
+        const cognome =
+            cognomeInput.value.toUpperCase();
+
+        const agente =
+            agenti.find(
+                a => a.cognome === cognome
+            );
+
+        if (!agente) return;
+
+        div.querySelector(".nomeAgente").value =
+            agente.nome;
+
+        div.querySelector(".cidAgente").value =
+            agente.cid;
+
+    });
+
+}
 
     contenitore.appendChild(div);
 
