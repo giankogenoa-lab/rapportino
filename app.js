@@ -129,16 +129,22 @@ if (agentiPresenti.length > 0) {
     <label>Turno</label>
 
     <select class="turno">
-      <option>M</option>
-      <option>M1</option>
-      <option>M2</option>
-      <option>M3</option>
-      <option>P</option>
-      <option>SIEF</option>
-      <option>N</option>
-      <option>NI</option>
-      <option>N3</option>
-    </select>
+
+    <option value="">
+        Seleziona turno
+    </option>
+
+    <option>M</option>
+    <option>M1</option>
+    <option>M2</option>
+    <option>M3</option>
+    <option>P</option>
+    <option>SIEF</option>
+    <option>N</option>
+    <option>NI</option>
+    <option>N3</option>
+
+</select>
 
     <label>Straordinario</label>
     <input class="straordinario">
