@@ -52,7 +52,7 @@ function aggiungiAgente() {
   const contenitore =
     document.getElementById("contenitoreAgenti");
 
-  const blocco = document.createElement("div");
+  const blocco = document.createElement("blocco");
 
   blocco.className = "blocco-agente";
 
