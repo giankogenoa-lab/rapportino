@@ -1,160 +1,142 @@
 let agenti = [];
 
 fetch("agenti.json")
-    .then(response => response.json())
-    .then(data => {
-        agenti = data;
-    });
+  .then(response => response.json())
+  .then(data => {
+    agenti = data;
+  });
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    document
-        .getElementById("cognomeRichiedente")
-        .addEventListener("input", trovaRichiedente);
+  const campoRichiedente =
+    document.getElementById("cognomeRichiedente");
 
-    document
-        .getElementById("aggiungiAgente")
-        .addEventListener("click", aggiungiAgente);
+  const pulsante =
+    document.getElementById("aggiungiAgente");
+
+  if (campoRichiedente) {
+    campoRichiedente.addEventListener("input", trovaRichiedente);
+  }
+
+  if (pulsante) {
+    pulsante.addEventListener("click", aggiungiAgente);
+  }
 
 });
 
 function trovaRichiedente() {
 
-    const cognome =
-        document
-            .getElementById("cognomeRichiedente")
-            .value
-            .toUpperCase();
+  const cognome = document
+    .getElementById("cognomeRichiedente")
+    .value
+    .toUpperCase();
 
-    const agente =
-        agenti.find(
-            a => a.cognome === cognome
-        );
+  const agente = agenti.find(
+    a => a.cognome === cognome
+  );
 
-    if (!agente) return;
+  if (!agente) {
+    return;
+  }
 
-    document
-        .getElementById("nomeRichiedente")
-        .value = agente.nome;
+  document.getElementById("nomeRichiedente").value =
+    agente.nome;
 
-    document
-        .getElementById("cidRichiedente")
-        .value = agente.cid;
+  document.getElementById("cidRichiedente").value =
+    agente.cid;
 
-    const contenitore =
-    document.getElementById("contenitoreAgenti");
-
-if (contenitore.children.length === 0) {
-
-    aggiungiAgente();
-
-    const primoAgente =
-        contenitore.querySelector(".blocco-agente");
-
-    primoAgente
-        .querySelector(".cognomeAgente")
-        .value = agente.cognome;
-
-    primoAgente
-        .querySelector(".nomeAgente")
-        .value = agente.nome;
-
-    primoAgente
-        .querySelector(".cidAgente")
-        .value = agente.cid;
 }
 
 function aggiungiAgente() {
 
-    const contenitore =
-        document.getElementById("contenitoreAgenti");
+  const contenitore =
+    document.getElementById("contenitoreAgenti");
 
-    const div = document.createElement("div");
+  const blocco = document.createElement("div");
 
-    div.className = "blocco-agente";
+  blocco.className = "blocco-agente";
 
-    div.innerHTML = `
+  blocco.innerHTML = `
+    <hr>
 
-        <hr>
+    <h3>Agente</h3>
 
-        <h3>Agente</h3>
+    <label>Cognome</label>
+    <input class="cognomeAgente">
 
-        <label>Cognome</label>
-        <input class="cognomeAgente">
+    <label>Nome</label>
+    <input class="nomeAgente" readonly>
 
-        <label>Nome</label>
-        <input class="nomeAgente" readonly>
+    <label>CID</label>
+    <input class="cidAgente" readonly>
 
-        <label>CID</label>
-        <input class="cidAgente" readonly>
+    <label>Turno</label>
 
-        <label>Turno</label>
+    <select class="turno">
+      <option>M</option>
+      <option>M1</option>
+      <option>M2</option>
+      <option>M3</option>
+      <option>P</option>
+      <option>SIEF</option>
+      <option>N</option>
+      <option>NI</option>
+      <option>N3</option>
+    </select>
 
-        <select class="turno">
-            <option>M</option>
-            <option>M1</option>
-            <option>M2</option>
-            <option>M3</option>
-            <option>P</option>
-            <option>SIEF</option>
-            <option>N</option>
-            <option>NI</option>
-            <option>N3</option>
-        </select>
+    <label>Straordinario</label>
+    <input class="straordinario">
 
-        <label>Straordinario</label>
-        <input class="straordinario">
+    <br><br>
 
-        <br><br>
+    <label><input type="checkbox"> ChRep</label>
+    <label><input type="checkbox"> ChDisp</label>
+    <label><input type="checkbox"> Trasferta</label>
+    <label><input type="checkbox"> Linea</label>
 
-        <label><input type="checkbox" class="chrep"> ChRep</label>
-        <label><input type="checkbox" class="chdisp"> ChDisp</label>
-        <label><input type="checkbox" class="trasferta"> Trasferta</label>
-        <label><input type="checkbox" class="linea"> Linea</label>
+    <br>
 
-        <br>
+    <label><input type="checkbox"> Galleria</label>
+    <label><input type="checkbox"> Sost.Nocive</label>
+    <label><input type="checkbox"> Scorta</label>
+    <label><input type="checkbox"> TI</label>
 
-        <label><input type="checkbox" class="galleria"> Galleria</label>
-        <label><input type="checkbox" class="sostnocive"> Sost. Nocive</label>
-        <label><input type="checkbox" class="scorta"> Scorta</label>
-        <label><input type="checkbox" class="ti"> TI</label>
+    <br><br>
 
-        <br><br>
+    <button type="button">Elimina</button>
+  `;
 
-        <button type="button"
-            onclick="this.parentElement.remove()">
-            Elimina
-        </button>
+  contenitore.appendChild(blocco);
 
-    `;
+  const cognomeInput =
+    blocco.querySelector(".cognomeAgente");
 
-    contenitore.appendChild(div);
+  cognomeInput.addEventListener("input", () => {
 
-    const cognomeInput =
-        div.querySelector(".cognomeAgente");
+    const cognome =
+      cognomeInput.value.toUpperCase();
 
-    cognomeInput.addEventListener("input", () => {
+    const agente =
+      agenti.find(
+        a => a.cognome === cognome
+      );
 
-        const cognome =
-            cognomeInput.value.toUpperCase();
+    if (!agente) {
+      return;
+    }
 
-        const agente =
-            agenti.find(
-                a => a.cognome === cognome
-            );
+    blocco.querySelector(".nomeAgente").value =
+      agente.nome;
 
-        if (!agente) return;
+    blocco.querySelector(".cidAgente").value =
+      agente.cid;
 
-        div.querySelector(".nomeAgente").value =
-            agente.nome;
+  });
 
-        div.querySelector(".cidAgente").value =
-            agente.cid;
-
+  blocco
+    .querySelector("button")
+    .addEventListener("click", () => {
+      blocco.remove();
     });
-
-}
-
-    contenitore.appendChild(div);
 
 }
