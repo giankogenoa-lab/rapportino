@@ -45,10 +45,66 @@ function trovaRichiedente() {
   document.getElementById("cidRichiedente").value =
     agente.cid;
 
+  const contenitore =
+    document.getElementById("contenitoreAgenti");
+
+if (contenitore.children.length === 0) {
+
+    aggiungiAgente();
+
+    const primoAgente =
+        contenitore.querySelector(".blocco-agente");
+
+    primoAgente.querySelector(".cognomeAgente").value =
+        agente.cognome;
+
+    primoAgente.querySelector(".nomeAgente").value =
+        agente.nome;
+
+    primoAgente.querySelector(".cidAgente").value =
+        agente.cid;
+}
+
 }
 
 function aggiungiAgente() {
 
+const agentiPresenti =
+    document.querySelectorAll(".blocco-agente");
+
+if (agentiPresenti.length > 0) {
+
+    const ultimo =
+        agentiPresenti[agentiPresenti.length - 1];
+
+    const cognome =
+        ultimo.querySelector(".cognomeAgente").value.trim();
+
+    const nome =
+        ultimo.querySelector(".nomeAgente").value.trim();
+
+    const cid =
+        ultimo.querySelector(".cidAgente").value.trim();
+
+    const turno =
+        ultimo.querySelector(".turno").value.trim();
+
+    if (
+        cognome === "" ||
+        nome === "" ||
+        cid === "" ||
+        turno === ""
+    ) {
+
+        alert(
+            "Completa Cognome, Nome, CID e Turno dell'ultimo agente prima di aggiungerne un altro."
+        );
+
+        return;
+    }
+}
+``
+  
   const contenitore =
     document.getElementById("contenitoreAgenti");
 
