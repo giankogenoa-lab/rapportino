@@ -41,6 +41,29 @@ function trovaRichiedente() {
         .getElementById("cidRichiedente")
         .value = agente.cid;
 
+    const contenitore =
+    document.getElementById("contenitoreAgenti");
+
+if (contenitore.children.length === 0) {
+
+    aggiungiAgente();
+
+    const primoAgente =
+        contenitore.querySelector(".blocco-agente");
+
+    primoAgente
+        .querySelector(".cognomeAgente")
+        .value = agente.cognome;
+
+    primoAgente
+        .querySelector(".nomeAgente")
+        .value = agente.nome;
+
+    primoAgente
+        .querySelector(".cidAgente")
+        .value = agente.cid;
+}
+
 }
 
 function aggiungiAgente() {
