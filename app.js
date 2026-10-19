@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document
         .getElementById("aggiungiAgente")
-        .addEventListener("click", aggiungiAgente);
+        .addEventListener("click", () => aggiungiAgente(false));
 
     document
         .getElementById("rivedi")
@@ -51,16 +51,16 @@ function trovaRichiedente() {
 
         aggiungiAgente(true);
 
-        const richiedente =
+        const primo =
             document.getElementById("agenteRichiedente");
 
-        richiedente.querySelector(".cognomeAgente").value =
+        primo.querySelector(".cognomeAgente").value =
             agente.cognome;
 
-        richiedente.querySelector(".nomeAgente").value =
+        primo.querySelector(".nomeAgente").value =
             agente.nome;
 
-        richiedente.querySelector(".cidAgente").value =
+        primo.querySelector(".cidAgente").value =
             agente.cid;
 
     }
@@ -102,7 +102,6 @@ function aggiungiAgente(richiedente = false) {
 
             return;
         }
-
     }
 
     const contenitore =
@@ -131,7 +130,10 @@ function aggiungiAgente(richiedente = false) {
         <label>Turno</label>
 
         <select class="turno">
-            <option value="">Seleziona turno</option>
+
+            <option value="">
+                Seleziona turno
+            </option>
 
             <option>M</option>
             <option>M1</option>
@@ -142,6 +144,7 @@ function aggiungiAgente(richiedente = false) {
             <option>N</option>
             <option>NI</option>
             <option>N3</option>
+
         </select>
 
         <label>Straordinario</label>
@@ -162,13 +165,10 @@ function aggiungiAgente(richiedente = false) {
         <label><input type="checkbox" class="ti"> TI</label>
 
         ${richiedente ? "" : `
-
-        <br><br>
-
-        <button type="button" class="btnElimina">
-            Elimina
-        </button>
-
+            <br><br>
+            <button type="button" class="btnElimina">
+                Elimina
+            </button>
         `}
 
         <hr>
@@ -224,32 +224,30 @@ function generaRiepilogo() {
         document.querySelectorAll(".blocco-agente");
 
     if (agentiInseriti.length === 0) {
-
         alert("Inserire almeno un agente.");
-
         return;
     }
 
     if (note === "") {
-
         alert("Compilare il campo Note.");
-
         return;
     }
 
     let html = `
+        <h2>Dati Generali</h2>
 
-    <h2>Dati Generali</h2>
+        <p>
+            <strong>Data riferimento:</strong>
+            ${document.getElementById("dataRiferimento").value}
+        </p>
 
-    <p><strong>Data riferimento:</strong>
-    ${document.getElementById("dataRiferimento").value}</p>
+        <p>
+            <strong>Richiedente:</strong>
+            ${document.getElementById("cognomeRichiedente").value}
+            ${document.getElementById("nomeRichiedente").value}
+        </p>
 
-    <p><strong>Richiedente:</strong>
-    ${document.getElementById("cognomeRichiedente").value}
-    ${document.getElementById("nomeRichiedente").value}</p>
-
-    <h2>Agenti</h2>
-
+        <h2>Agenti</h2>
     `;
 
     for (const agente of agentiInseriti) {
@@ -267,60 +265,63 @@ function generaRiepilogo() {
             agente.querySelector(".turno").value;
 
         if (turno === "") {
-
-            alert(
-                "Tutti gli agenti devono avere un turno."
-            );
-
+            alert("Tutti gli agenti devono avere un turno.");
             return;
         }
 
         html += `
 
-        <div class="blocco-agente">
+            <div class="blocco-agente">
 
-            <strong>${cognome} ${nome}</strong>
+                <strong>${cognome} ${nome}</strong>
+
+                <br>
+
+                CID: ${cid}
+
+                <br>
+
+                Turno: ${turno}
+
+            </div>
 
             <br>
-
-            CID: ${cid}
-
-            <br>
-
-            Turno: ${turno}
-
-        </div>
-
-        <br>
 
         `;
     }
 
     html += `
-
-    <h2>Note</h2>
-
-    <p>${note}</p>
-
+        <h2>Note</h2>
+        <p>${note}</p>
     `;
 
     document.getElementById("contenutoRiepilogo")
         .innerHTML = html;
 
     document.getElementById("paginaInserimento")
-        .style.display = "none";
+        .classList.add("nascosto");
 
     document.getElementById("paginaRiepilogo")
-        .style.display = "block";
+        .classList.remove("nascosto");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 }
 
 function tornaModifica() {
 
     document.getElementById("paginaRiepilogo")
-        .style.display = "none";
+        .classList.add("nascosto");
 
     document.getElementById("paginaInserimento")
-        .style.display = "block";
+        .classList.remove("nascosto");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 }
