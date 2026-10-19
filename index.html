@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Rapportino</title>
 
-    <link rel="stylesheet" href="style.css"
+    <link.css
 </head>
 
 <body>
@@ -16,54 +17,72 @@
     <h2>Richiedente</h2>
 
     <label>Data di riferimento *</label>
-    <input type="text" id="dataRiferimento">
+    <input type="text"
+           id="dataRiferimento"
+           placeholder="01.01.2026">
 
     <label>Cognome richiedente *</label>
-    <input type="text" id="cognomeRichiedente">
+    <input type="text"
+           id="cognomeRichiedente">
 
     <label>Nome</label>
-    <input type="text" id="nomeRichiedente" readonly>
+    <input type="text"
+           id="nomeRichiedente"
+           readonly>
 
     <label>CID</label>
-    <input type="text" id="cidRichiedente" readonly>
+    <input type="text"
+           id="cidRichiedente"
+           readonly>
 
     <hr>
 
     <h2>Agenti</h2>
 
-    <button id="aggiungiAgente" type="button">
+    <button id="aggiungiAgente"
+            type="button">
         + Aggiungi agente
     </button>
+
+    <br><br>
 
     <div id="contenitoreAgenti"></div>
 
     <hr>
 
     <label>Note *</label>
-    <textarea id="note" rows="6"></textarea>
+
+    <textarea id="note"
+              rows="8"></textarea>
 
     <br><br>
 
-    <button id="rivedi" type="button">
+    <button id="rivedi"
+            type="button">
         Rivedi
     </button>
 
+    <hr>
+
     <div id="riepilogo"></div>
 
-<div id="azioniFinali" style="display:none;">
+    <div id="azioniFinali"
+         style="display:none;">
 
-    <button id="modifica" type="button">
-        Modifica
-    </button>
+        <button id="modifica"
+                type="button">
+            Modifica
+        </button>
 
-    <button id="salvaInvia" type="button">
-        Salva e Invia
-    </button>
+        <button id="salvaInvia"
+                type="button">
+            Salva e Invia
+        </button>
 
-</div>
-
+    </div>
 
     <script src="app.js"></script>
 
 </body>
+
 </html>
