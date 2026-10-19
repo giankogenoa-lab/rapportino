@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rapportino</title>
 
-    <link rel="stylesheet" href="style.css">
-aInserimento">
+    style.css
+</head>
+
+<body>
+
+<div id="paginaInserimento">
 
     <h1>Rapportino</h1>
 
@@ -16,8 +20,14 @@ aInserimento">
     <label>Data di riferimento *</label>
     <input type="text" id="dataRiferimento">
 
-    <label>Cognome richiedente *</label>
-    <input type="text" id="cognomeRichiedente">
+    <label>Richiedente *</label>
+
+    <input
+        type="text"
+        id="cognomeRichiedente"
+        list="listaAgenti">
+
+    <datalist id="listaAgenti"></datalist>
 
     <label>Nome</label>
     <input type="text" id="nomeRichiedente" readonly>
@@ -40,6 +50,7 @@ aInserimento">
     <hr>
 
     <label>Note *</label>
+
     <textarea id="note" rows="8"></textarea>
 
     <br><br>
