@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Rapportino</title>
 
     <link.css
@@ -12,9 +11,46 @@
 
 <body>
 
-    <div id="paginaInserimento">
+<div id="paginaInserimento">
 
-    <!-- TUTTO IL CONTENUTO ATTUALE -->
+    <h1>Rapportino</h1>
+
+    <h2>Richiedente</h2>
+
+    <label>Data di riferimento *</label>
+    <input type="text" id="dataRiferimento">
+
+    <label>Cognome richiedente *</label>
+    <input type="text" id="cognomeRichiedente">
+
+    <label>Nome</label>
+    <input type="text" id="nomeRichiedente" readonly>
+
+    <label>CID</label>
+    <input type="text" id="cidRichiedente" readonly>
+
+    <hr>
+
+    <h2>Agenti</h2>
+
+    <button id="aggiungiAgente" type="button">
+        + Aggiungi agente
+    </button>
+
+    <br><br>
+
+    <div id="contenitoreAgenti"></div>
+
+    <hr>
+
+    <label>Note *</label>
+    <textarea id="note" rows="8"></textarea>
+
+    <br><br>
+
+    <button id="rivedi" type="button">
+        Rivedi
+    </button>
 
 </div>
 
@@ -35,201 +71,8 @@
     </button>
 
 </div>
-    
-    <h1>Rapportino</h1>
 
-    <h2>Richiedente</h2>
+<script src="app.js"></script>
 
-    <label>Data di riferimento *</label>
-    <input type="text"
-           id="dataRiferimento"
-           placeholder="01.01.2026">
-
-    <label>Cognome richiedente *</label>
-    <input type="text"
-           id="cognomeRichiedente">
-
-    <label>Nome</label>
-    <input type="text"
-           id="nomeRichiedente"
-           readonly>
-
-    <label>CID</label>
-    <input type="text"
-           id="cidRichiedente"
-           readonly>
-
-    <hr>
-
-    <h2>Agenti</h2>
-
-    <button id="aggiungiAgente"
-            type="button">
-        + Aggiungi agente
-    </button>
-
-    <br><br>
-
-    <div id="contenitoreAgenti"></div>
-
-    <hr>
-
-    <label>Note *</label>
-
-    <textarea id="note"
-              rows="8"></textarea>
-
-    <br><br>
-
-    <button id="rivedi"
-            type="button">
-        Rivedi
-    </button>
-
-    <hr>
-
-    <div id="azioniFinali" style="display:none;">
-
-    <button id="modifica" type="button">
-        Modifica
-    </button>
-
-    <button id="salvaInvia" type="button">
-        Salva e Invia
-    </button>
-
-</div>
-    function generaRiepilogo() {
-
-    const note =
-        document.getElementById("note")
-        .value
-        .trim();
-
-    const agentiInseriti =
-        document.querySelectorAll(".blocco-agente");
-
-    if (agentiInseriti.length === 0) {
-
-        alert("Inserire almeno un agente.");
-
-        return;
-    }
-
-    if (note === "") {
-
-        alert("Compilare il campo Note.");
-
-        return;
-    }
-
-    let html = `
-
-        <p>
-            <strong>Data riferimento:</strong>
-            ${document.getElementById("dataRiferimento").value}
-        </p>
-
-        <p>
-            <strong>Richiedente:</strong>
-            ${document.getElementById("cognomeRichiedente").value}
-            ${document.getElementById("nomeRichiedente").value}
-        </p>
-
-        <hr>
-
-        <h3>Agenti</h3>
-    `;
-
-    agentiInseriti.forEach(agente => {
-
-        const cognome =
-            agente.querySelector(".cognomeAgente").value;
-
-        const nome =
-            agente.querySelector(".nomeAgente").value;
-
-        const cid =
-            agente.querySelector(".cidAgente").value;
-
-        const turno =
-            agente.querySelector(".turno").value;
-
-        if (turno === "") {
-
-            alert(
-                "Tutti gli agenti devono avere un turno."
-            );
-
-            throw "";
-        }
-
-        html += `
-
-            <p>
-
-                <strong>${cognome} ${nome}</strong>
-
-                <br>
-
-                CID: ${cid}
-
-                <br>
-
-                Turno: ${turno}
-
-            </p>
-
-        `;
-    });
-
-    html += `
-
-        <hr>
-
-        <h3>Note</h3>
-
-        <p>${note}</p>
-    `;
-
-    document
-        .getElementById("contenutoRiepilogo")
-        .innerHTML = html;
-
-    document
-        .getElementById("paginaInserimento")
-        .style.display = "none";
-
-    document
-        .getElementById("paginaRiepilogo")
-        .style.display = "block";
-}
-
-    <script src="app.js"></script>
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-    const btnModifica =
-        document.getElementById("modifica");
-
-    if(btnModifica){
-
-        btnModifica.addEventListener("click", () => {
-
-            document
-                .getElementById("paginaRiepilogo")
-                .style.display = "none";
-
-            document
-                .getElementById("paginaInserimento")
-                .style.display = "block";
-
-        });
-
-    }
-
-});
-    
 </body>
-
 </html>
