@@ -39,13 +39,12 @@ function caricaListaAgenti() {
 
     agenti.forEach(a => {
 
-        const opzione =
+        const option =
             document.createElement("option");
 
-        opzione.value =
-            `${a.cognome} - ${a.nome} - ${a.cid}`;
+        option.value = a.cognome;
 
-        lista.appendChild(opzione);
+        lista.appendChild(option);
 
     });
 
@@ -53,18 +52,20 @@ function caricaListaAgenti() {
 
 function trovaRichiedente() {
 
-    const valore =
+    const cognome =
         document
-          .getElementById("cognomeRichiedente")
-          .value;
+            .getElementById("cognomeRichiedente")
+            .value
+            .toUpperCase();
 
     const agente =
         agenti.find(
-            a =>
-            `${a.cognome} - ${a.nome} - ${a.cid}` === valore
+            a => a.cognome === cognome
         );
 
-    if (!agente) return;
+    if (!agente) {
+        return;
+    }
 
     document.getElementById("nomeRichiedente").value =
         agente.nome;
@@ -80,7 +81,7 @@ function trovaRichiedente() {
             document.getElementById("agenteRichiedente");
 
         primo.querySelector(".ricercaAgente").value =
-            `${agente.cognome} - ${agente.nome} - ${agente.cid}`;
+            agente.cognome;
 
         primo.querySelector(".nomeAgente").value =
             agente.nome;
@@ -102,7 +103,7 @@ function aggiungiAgente(richiedente = false) {
         const ultimo =
             agentiPresenti[agentiPresenti.length - 1];
 
-        const ricerca =
+        const cognome =
             ultimo.querySelector(".ricercaAgente").value.trim();
 
         const nome =
@@ -115,19 +116,18 @@ function aggiungiAgente(richiedente = false) {
             ultimo.querySelector(".turno").value.trim();
 
         if (
-            ricerca === "" ||
+            cognome === "" ||
             nome === "" ||
             cid === "" ||
             turno === ""
         ) {
 
             alert(
-                "Completa Agente, Nome, CID e Turno prima di aggiungerne un altro."
+                "Completa Cognome, Nome, CID e Turno dell'ultimo agente prima di aggiungerne un altro."
             );
 
             return;
         }
-
     }
 
     const contenitore =
@@ -151,13 +151,11 @@ function aggiungiAgente(richiedente = false) {
             list="listaAgenti">
 
         <label>Nome</label>
-
         <input
             class="nomeAgente"
             readonly>
 
         <label>CID</label>
-
         <input
             class="cidAgente"
             readonly>
@@ -183,7 +181,6 @@ function aggiungiAgente(richiedente = false) {
         </select>
 
         <label>Straordinario</label>
-
         <input class="straordinario">
 
         <br><br>
@@ -218,15 +215,17 @@ function aggiungiAgente(richiedente = false) {
 
     ricerca.addEventListener("input", () => {
 
-        const valore = ricerca.value;
+        const cognome =
+            ricerca.value.toUpperCase();
 
         const agente =
             agenti.find(
-                a =>
-                `${a.cognome} - ${a.nome} - ${a.cid}` === valore
+                a => a.cognome === cognome
             );
 
-        if (!agente) return;
+        if (!agente) {
+            return;
+        }
 
         blocco.querySelector(".nomeAgente").value =
             agente.nome;
@@ -272,6 +271,7 @@ function generaRiepilogo() {
     }
 
     let html = `
+
         <h2>Dati Generali</h2>
 
         <p>
@@ -280,12 +280,19 @@ function generaRiepilogo() {
         </p>
 
         <h2>Agenti</h2>
+
     `;
 
     for (const agente of agentiInseriti) {
 
-        const ricerca =
+        const cognome =
             agente.querySelector(".ricercaAgente").value;
+
+        const nome =
+            agente.querySelector(".nomeAgente").value;
+
+        const cid =
+            agente.querySelector(".cidAgente").value;
 
         const turno =
             agente.querySelector(".turno").value;
@@ -300,9 +307,18 @@ function generaRiepilogo() {
         }
 
         html += `
+
             <div class="blocco-agente">
 
-                <strong>${ricerca}</strong>
+                <strong>${cognome}</strong>
+
+                <br>
+
+                Nome: ${nome}
+
+                <br>
+
+                CID: ${cid}
 
                 <br>
 
@@ -311,22 +327,28 @@ function generaRiepilogo() {
             </div>
 
             <br>
+
         `;
     }
 
     html += `
+
         <h2>Note</h2>
 
         <p>${note}</p>
+
     `;
 
-    document.getElementById("contenutoRiepilogo")
+    document
+        .getElementById("contenutoRiepilogo")
         .innerHTML = html;
 
-    document.getElementById("paginaInserimento")
+    document
+        .getElementById("paginaInserimento")
         .classList.add("nascosto");
 
-    document.getElementById("paginaRiepilogo")
+    document
+        .getElementById("paginaRiepilogo")
         .classList.remove("nascosto");
 
     window.scrollTo({
@@ -338,10 +360,12 @@ function generaRiepilogo() {
 
 function tornaModifica() {
 
-    document.getElementById("paginaRiepilogo")
+    document
+        .getElementById("paginaRiepilogo")
         .classList.add("nascosto");
 
-    document.getElementById("paginaInserimento")
+    document
+        .getElementById("paginaInserimento")
         .classList.remove("nascosto");
 
     window.scrollTo({
