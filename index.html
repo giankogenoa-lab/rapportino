@@ -99,23 +99,137 @@
     </button>
 
 </div>
-    <div id="azioniFinali"
-         style="display:none;">
+    function generaRiepilogo() {
 
-        <button id="modifica"
-                type="button">
-            Modifica
-        </button>
+    const note =
+        document.getElementById("note")
+        .value
+        .trim();
 
-        <button id="salvaInvia"
-                type="button">
-            Salva e Invia
-        </button>
+    const agentiInseriti =
+        document.querySelectorAll(".blocco-agente");
 
-    </div>
+    if (agentiInseriti.length === 0) {
+
+        alert("Inserire almeno un agente.");
+
+        return;
+    }
+
+    if (note === "") {
+
+        alert("Compilare il campo Note.");
+
+        return;
+    }
+
+    let html = `
+
+        <p>
+            <strong>Data riferimento:</strong>
+            ${document.getElementById("dataRiferimento").value}
+        </p>
+
+        <p>
+            <strong>Richiedente:</strong>
+            ${document.getElementById("cognomeRichiedente").value}
+            ${document.getElementById("nomeRichiedente").value}
+        </p>
+
+        <hr>
+
+        <h3>Agenti</h3>
+    `;
+
+    agentiInseriti.forEach(agente => {
+
+        const cognome =
+            agente.querySelector(".cognomeAgente").value;
+
+        const nome =
+            agente.querySelector(".nomeAgente").value;
+
+        const cid =
+            agente.querySelector(".cidAgente").value;
+
+        const turno =
+            agente.querySelector(".turno").value;
+
+        if (turno === "") {
+
+            alert(
+                "Tutti gli agenti devono avere un turno."
+            );
+
+            throw "";
+        }
+
+        html += `
+
+            <p>
+
+                <strong>${cognome} ${nome}</strong>
+
+                <br>
+
+                CID: ${cid}
+
+                <br>
+
+                Turno: ${turno}
+
+            </p>
+
+        `;
+    });
+
+    html += `
+
+        <hr>
+
+        <h3>Note</h3>
+
+        <p>${note}</p>
+    `;
+
+    document
+        .getElementById("contenutoRiepilogo")
+        .innerHTML = html;
+
+    document
+        .getElementById("paginaInserimento")
+        .style.display = "none";
+
+    document
+        .getElementById("paginaRiepilogo")
+        .style.display = "block";
+}
 
     <script src="app.js"></script>
 
+    document.addEventListener("DOMContentLoaded", () => {
+
+    const btnModifica =
+        document.getElementById("modifica");
+
+    if(btnModifica){
+
+        btnModifica.addEventListener("click", () => {
+
+            document
+                .getElementById("paginaRiepilogo")
+                .style.display = "none";
+
+            document
+                .getElementById("paginaInserimento")
+                .style.display = "block";
+
+        });
+
+    }
+
+});
+    
 </body>
 
 </html>
