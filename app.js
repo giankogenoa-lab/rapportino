@@ -3,7 +3,11 @@ let agenti = [];
 fetch("agenti.json")
     .then(response => response.json())
     .then(data => {
+
         agenti = data;
+
+        caricaListaAgenti();
+
     });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -26,17 +30,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+function caricaListaAgenti() {
+
+    const lista =
+        document.getElementById("listaAgenti");
+
+    lista.innerHTML = "";
+
+    agenti.forEach(a => {
+
+        const opzione =
+            document.createElement("option");
+
+        opzione.value =
+            `${a.cognome} - ${a.nome} - ${a.cid}`;
+
+        lista.appendChild(opzione);
+
+    });
+
+}
+
 function trovaRichiedente() {
 
-    const cognome =
+    const valore =
         document
-        .getElementById("cognomeRichiedente")
-        .value
-        .toUpperCase();
+          .getElementById("cognomeRichiedente")
+          .value;
 
     const agente =
         agenti.find(
-            a => a.cognome === cognome
+            a =>
+            `${a.cognome} - ${a.nome} - ${a.cid}` === valore
         );
 
     if (!agente) return;
@@ -54,8 +79,8 @@ function trovaRichiedente() {
         const primo =
             document.getElementById("agenteRichiedente");
 
-        primo.querySelector(".cognomeAgente").value =
-            agente.cognome;
+        primo.querySelector(".ricercaAgente").value =
+            `${agente.cognome} - ${agente.nome} - ${agente.cid}`;
 
         primo.querySelector(".nomeAgente").value =
             agente.nome;
@@ -77,8 +102,8 @@ function aggiungiAgente(richiedente = false) {
         const ultimo =
             agentiPresenti[agentiPresenti.length - 1];
 
-        const cognome =
-            ultimo.querySelector(".cognomeAgente").value.trim();
+        const ricerca =
+            ultimo.querySelector(".ricercaAgente").value.trim();
 
         const nome =
             ultimo.querySelector(".nomeAgente").value.trim();
@@ -90,18 +115,19 @@ function aggiungiAgente(richiedente = false) {
             ultimo.querySelector(".turno").value.trim();
 
         if (
-            cognome === "" ||
+            ricerca === "" ||
             nome === "" ||
             cid === "" ||
             turno === ""
         ) {
 
             alert(
-                "Completa Cognome, Nome, CID e Turno dell'ultimo agente prima di aggiungerne un altro."
+                "Completa Agente, Nome, CID e Turno prima di aggiungerne un altro."
             );
 
             return;
         }
+
     }
 
     const contenitore =
@@ -118,14 +144,23 @@ function aggiungiAgente(richiedente = false) {
 
     blocco.innerHTML = `
 
-        <label>Cognome</label>
-        <input class="cognomeAgente">
+        <label>Agente</label>
+
+        <input
+            class="ricercaAgente"
+            list="listaAgenti">
 
         <label>Nome</label>
-        <input class="nomeAgente" readonly>
+
+        <input
+            class="nomeAgente"
+            readonly>
 
         <label>CID</label>
-        <input class="cidAgente" readonly>
+
+        <input
+            class="cidAgente"
+            readonly>
 
         <label>Turno</label>
 
@@ -148,6 +183,7 @@ function aggiungiAgente(richiedente = false) {
         </select>
 
         <label>Straordinario</label>
+
         <input class="straordinario">
 
         <br><br>
@@ -177,17 +213,17 @@ function aggiungiAgente(richiedente = false) {
 
     contenitore.appendChild(blocco);
 
-    const cognomeInput =
-        blocco.querySelector(".cognomeAgente");
+    const ricerca =
+        blocco.querySelector(".ricercaAgente");
 
-    cognomeInput.addEventListener("input", () => {
+    ricerca.addEventListener("input", () => {
 
-        const cognome =
-            cognomeInput.value.toUpperCase();
+        const valore = ricerca.value;
 
         const agente =
             agenti.find(
-                a => a.cognome === cognome
+                a =>
+                `${a.cognome} - ${a.nome} - ${a.cid}` === valore
             );
 
         if (!agente) return;
@@ -216,20 +252,22 @@ function aggiungiAgente(richiedente = false) {
 function generaRiepilogo() {
 
     const note =
-        document.getElementById("note")
-        .value
-        .trim();
+        document.getElementById("note").value.trim();
 
     const agentiInseriti =
         document.querySelectorAll(".blocco-agente");
 
     if (agentiInseriti.length === 0) {
+
         alert("Inserire almeno un agente.");
+
         return;
     }
 
     if (note === "") {
+
         alert("Compilare il campo Note.");
+
         return;
     }
 
@@ -241,43 +279,30 @@ function generaRiepilogo() {
             ${document.getElementById("dataRiferimento").value}
         </p>
 
-        <p>
-            <strong>Richiedente:</strong>
-            ${document.getElementById("cognomeRichiedente").value}
-            ${document.getElementById("nomeRichiedente").value}
-        </p>
-
         <h2>Agenti</h2>
     `;
 
     for (const agente of agentiInseriti) {
 
-        const cognome =
-            agente.querySelector(".cognomeAgente").value;
-
-        const nome =
-            agente.querySelector(".nomeAgente").value;
-
-        const cid =
-            agente.querySelector(".cidAgente").value;
+        const ricerca =
+            agente.querySelector(".ricercaAgente").value;
 
         const turno =
             agente.querySelector(".turno").value;
 
         if (turno === "") {
-            alert("Tutti gli agenti devono avere un turno.");
+
+            alert(
+                "Tutti gli agenti devono avere un turno."
+            );
+
             return;
         }
 
         html += `
-
             <div class="blocco-agente">
 
-                <strong>${cognome} ${nome}</strong>
-
-                <br>
-
-                CID: ${cid}
+                <strong>${ricerca}</strong>
 
                 <br>
 
@@ -286,12 +311,12 @@ function generaRiepilogo() {
             </div>
 
             <br>
-
         `;
     }
 
     html += `
         <h2>Note</h2>
+
         <p>${note}</p>
     `;
 
