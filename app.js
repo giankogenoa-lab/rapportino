@@ -8,6 +8,10 @@ fetch("agenti.json")
 
 document.addEventListener("DOMContentLoaded", () => {
 
+  document
+  .getElementById("rivedi")
+  .addEventListener("click", generaRiepilogo);
+  
   const campoRichiedente =
     document.getElementById("cognomeRichiedente");
 
