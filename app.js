@@ -538,11 +538,16 @@ async function salvaInvia() {
                 }
             );
 
-        if (!risposta.ok) {
+       console.log("Status:", risposta.status);
 
-            throw new Error(
-                "Errore durante il salvataggio"
-            );
+if (!risposta.ok) {
+
+    throw new Error(
+        "HTTP " +
+        risposta.status
+    );
+
+}
 
         }
 
@@ -551,11 +556,12 @@ async function salvaInvia() {
     }
     catch (errore) {
 
-        console.error(errore);
+    console.error(errore);
 
-        alert(
-            "Errore durante il salvataggio del rapportino."
-        );
+    alert(
+        "ERRORE:\n" +
+        errore.toString()
+    );
 
         pulsante.disabled = false;
 
