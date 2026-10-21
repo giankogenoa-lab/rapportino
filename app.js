@@ -449,7 +449,9 @@ async function salvaInvia() {
         "Salvataggio in corso...";
 
     const agentiInseriti =
-        document.querySelectorAll(".blocco-agente");
+    document
+        .getElementById("contenitoreAgenti")
+        .querySelectorAll(".blocco-agente");
 
     const elencoAgenti = [];
 
