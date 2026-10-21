@@ -38,3 +38,13 @@ button {
 .nascosto {
     display: none !important;
 }
+
+#paginaCompletata {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#salvaInvia:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
