@@ -11,75 +11,115 @@
 
 <body>
 
-<div id="paginaInserimento">
+    <div id="paginaInserimento">
 
-    <h1>Rapportino</h1>
+        <h1>Rapportino</h1>
 
-    <h2>Richiedente</h2>
+        <h2>Richiedente</h2>
 
-    <label>Data di riferimento *</label>
-    <input type="text" id="dataRiferimento">
+        <label for="dataRiferimento">
+            Data di riferimento *
+        </label>
 
-    <label>Richiedente *</label>
+        <input
+            type="text"
+            id="dataRiferimento"
+            placeholder="01.01.2026">
 
-    <input
-        type="text"
-        id="cognomeRichiedente"
-        list="listaAgenti">
+        <label for="cognomeRichiedente">
+            Richiedente *
+        </label>
 
-    <datalist id="listaAgenti"></datalist>
+        <input
+            type="text"
+            id="cognomeRichiedente"
+            list="listaAgenti">
 
-    <label>Nome</label>
-    <input type="text" id="nomeRichiedente" readonly>
+        <datalist id="listaAgenti"></datalist>
 
-    <label>CID</label>
-    <input type="text" id="cidRichiedente" readonly>
+        <label for="nomeRichiedente">
+            Nome
+        </label>
 
-    <hr>
+        <input
+            type="text"
+            id="nomeRichiedente"
+            readonly>
 
-    <h2>Agenti</h2>
+        <label for="cidRichiedente">
+            CID
+        </label>
 
-    <button id="aggiungiAgente" type="button">
-        + Aggiungi agente
-    </button>
+        <input
+            type="text"
+            id="cidRichiedente"
+            readonly>
 
-    <br><br>
+        <hr>
 
-    <div id="contenitoreAgenti"></div>
+        <h2>Agenti</h2>
 
-    <hr>
+        <button
+            id="aggiungiAgente"
+            type="button">
 
-    <label>Note *</label>
+            + Aggiungi agente
 
-    <textarea id="note" rows="8"></textarea>
+        </button>
 
-    <br><br>
+        <br><br>
 
-    <button id="rivedi" type="button">
-        Rivedi
-    </button>
+        <div id="contenitoreAgenti"></div>
 
-</div>
+        <hr>
 
-<div id="paginaRiepilogo" class="nascosto">
+        <label for="note">
+            Note *
+        </label>
 
-    <h1>Riepilogo Rapportino</h1>
+        <textarea
+            id="note"
+            rows="8"></textarea>
 
-    <div id="contenutoRiepilogo"></div>
+        <br><br>
 
-    <br>
+        <button
+            id="rivedi"
+            type="button">
 
-    <button id="modifica" type="button">
-        Modifica
-    </button>
+            Rivedi
 
-    <button id="salvaInvia" type="button">
-        Salva e Invia
-    </button>
+        </button>
 
-</div>
+    </div>
 
-<script src="app.js"></script>
+    <div id="paginaRiepilogo" class="nascosto">
+
+        <h1>Riepilogo Rapportino</h1>
+
+        <div id="contenutoRiepilogo"></div>
+
+        <br>
+
+        <button
+            id="modifica"
+            type="button">
+
+            Modifica
+
+        </button>
+
+        <button
+            id="salvaInvia"
+            type="button">
+
+            Salva e Invia
+
+        </button>
+
+    </div>
+
+    <script src="app.js"></script>
 
 </body>
 
