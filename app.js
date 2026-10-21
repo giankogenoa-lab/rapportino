@@ -563,6 +563,7 @@ if (!risposta.ok) {
         errore.toString()
     );
 
+}
         pulsante.disabled = false;
 
         pulsante.textContent =
