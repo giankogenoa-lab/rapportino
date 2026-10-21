@@ -63,9 +63,7 @@ function trovaRichiedente() {
             a => a.cognome === cognome
         );
 
-    if (!agente) {
-        return;
-    }
+    if (!agente) return;
 
     document.getElementById("nomeRichiedente").value =
         agente.nome;
@@ -90,7 +88,24 @@ function trovaRichiedente() {
             agente.cid;
 
     }
+}
 
+function agenteGiaInserito(cognome) {
+
+    const agentiPresenti =
+        document.querySelectorAll(".ricercaAgente");
+
+    for (const agente of agentiPresenti) {
+
+        if (
+            agente.value.toUpperCase() ===
+            cognome.toUpperCase()
+        ) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function aggiungiAgente(richiedente = false) {
@@ -151,11 +166,13 @@ function aggiungiAgente(richiedente = false) {
             list="listaAgenti">
 
         <label>Nome</label>
+
         <input
             class="nomeAgente"
             readonly>
 
         <label>CID</label>
+
         <input
             class="cidAgente"
             readonly>
@@ -181,6 +198,7 @@ function aggiungiAgente(richiedente = false) {
         </select>
 
         <label>Straordinario</label>
+
         <input class="straordinario">
 
         <br><br>
@@ -213,7 +231,7 @@ function aggiungiAgente(richiedente = false) {
     const ricerca =
         blocco.querySelector(".ricercaAgente");
 
-    ricerca.addEventListener("input", () => {
+    ricerca.addEventListener("change", () => {
 
         const cognome =
             ricerca.value.toUpperCase();
@@ -223,7 +241,24 @@ function aggiungiAgente(richiedente = false) {
                 a => a.cognome === cognome
             );
 
-        if (!agente) {
+        if (!agente) return;
+
+        const duplicati =
+            [...document.querySelectorAll(".ricercaAgente")]
+                .filter(x =>
+                    x.value.toUpperCase() === cognome
+                );
+
+        if (
+            duplicati.length > 1 &&
+            !richiedente
+        ) {
+
+            alert(
+                "Agente già presente nel rapportino."
+            );
+
+            ricerca.value = "";
             return;
         }
 
@@ -251,7 +286,10 @@ function aggiungiAgente(richiedente = false) {
 function generaRiepilogo() {
 
     const note =
-        document.getElementById("note").value.trim();
+        document
+            .getElementById("note")
+            .value
+            .trim();
 
     const agentiInseriti =
         document.querySelectorAll(".blocco-agente");
@@ -297,6 +335,9 @@ function generaRiepilogo() {
         const turno =
             agente.querySelector(".turno").value;
 
+        const straordinario =
+            agente.querySelector(".straordinario").value;
+
         if (turno === "") {
 
             alert(
@@ -306,6 +347,17 @@ function generaRiepilogo() {
             return;
         }
 
+        const attivita = [];
+
+        if (agente.querySelector(".chrep").checked) attivita.push("ChRep");
+        if (agente.querySelector(".chdisp").checked) attivita.push("ChDisp");
+        if (agente.querySelector(".trasferta").checked) attivita.push("Trasferta");
+        if (agente.querySelector(".linea").checked) attivita.push("Linea");
+        if (agente.querySelector(".galleria").checked) attivita.push("Galleria");
+        if (agente.querySelector(".sostnocive").checked) attivita.push("Sost. Nocive");
+        if (agente.querySelector(".scorta").checked) attivita.push("Scorta");
+        if (agente.querySelector(".ti").checked) attivita.push("TI");
+
         html += `
 
             <div class="blocco-agente">
@@ -313,16 +365,20 @@ function generaRiepilogo() {
                 <strong>${cognome}</strong>
 
                 <br>
-
                 Nome: ${nome}
 
                 <br>
-
                 CID: ${cid}
 
                 <br>
-
                 Turno: ${turno}
+
+                <br>
+                Straordinario: ${straordinario || "-"}
+
+                <br>
+                Attività:
+                ${attivita.length > 0 ? attivita.join(", ") : "Nessuna"}
 
             </div>
 
@@ -351,11 +407,6 @@ function generaRiepilogo() {
         .getElementById("paginaRiepilogo")
         .classList.remove("nascosto");
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
 }
 
 function tornaModifica() {
@@ -368,9 +419,8 @@ function tornaModifica() {
         .getElementById("paginaInserimento")
         .classList.remove("nascosto");
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    document
+        .getElementById("contenutoRiepilogo")
+        .innerHTML = "";
 
 }
