@@ -1,5 +1,8 @@
 let agenti = [];
 
+const FLOW_URL =
+    "https://7dafc5c20598eafc8ec5d1d6346e55.5a.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/884d26fa010c4c30bc7964c6867b3add/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OmLyahrIU5ngbdgSk-l2UTcSxKcFqhJC781Gvcp9vTs";
+
 fetch("agenti.json")
     .then(response => response.json())
     .then(data => {
@@ -27,6 +30,17 @@ document.addEventListener("DOMContentLoaded", () => {
     document
         .getElementById("modifica")
         .addEventListener("click", tornaModifica);
+
+    document
+    .getElementById("salvaInvia")
+    .addEventListener("click", salvaInvia);
+
+document
+    .getElementById("nuovoRapportino")
+    .addEventListener(
+        "click",
+        () => location.reload()
+    );
 
 });
 
@@ -422,5 +436,142 @@ function tornaModifica() {
     document
         .getElementById("contenutoRiepilogo")
         .innerHTML = "";
+
+}
+
+async function salvaInvia() {
+
+    const pulsante =
+        document.getElementById("salvaInvia");
+
+    pulsante.disabled = true;
+    pulsante.textContent =
+        "Salvataggio in corso...";
+
+    const agentiInseriti =
+        document.querySelectorAll(".blocco-agente");
+
+    const elencoAgenti = [];
+
+    agentiInseriti.forEach(agente => {
+
+        elencoAgenti.push({
+
+            cognome:
+                agente.querySelector(".ricercaAgente").value,
+
+            nome:
+                agente.querySelector(".nomeAgente").value,
+
+            cid:
+                agente.querySelector(".cidAgente").value,
+
+            turno:
+                agente.querySelector(".turno").value,
+
+            straordinario:
+                agente.querySelector(".straordinario").value,
+
+            chrep:
+                agente.querySelector(".chrep").checked,
+
+            chdisp:
+                agente.querySelector(".chdisp").checked,
+
+            trasferta:
+                agente.querySelector(".trasferta").checked,
+
+            linea:
+                agente.querySelector(".linea").checked,
+
+            galleria:
+                agente.querySelector(".galleria").checked,
+
+            sostnocive:
+                agente.querySelector(".sostnocive").checked,
+
+            scorta:
+                agente.querySelector(".scorta").checked,
+
+            ti:
+                agente.querySelector(".ti").checked
+
+        });
+
+    });
+
+    const payload = {
+
+        dataRiferimento:
+            document.getElementById("dataRiferimento").value,
+
+        nomeRichiedente:
+            document.getElementById("nomeRichiedente").value,
+
+        cognomeRichiedente:
+            document.getElementById("cognomeRichiedente").value,
+
+        cidRichiedente:
+            document.getElementById("cidRichiedente").value,
+
+        note:
+            document.getElementById("note").value,
+
+        agenti:
+            elencoAgenti
+
+    };
+
+    try {
+
+        const risposta =
+            await fetch(
+                FLOW_URL,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                }
+            );
+
+        if (!risposta.ok) {
+
+            throw new Error(
+                "Errore durante il salvataggio"
+            );
+
+        }
+
+        mostraRingraziamento();
+
+    }
+    catch (errore) {
+
+        console.error(errore);
+
+        alert(
+            "Errore durante il salvataggio del rapportino."
+        );
+
+        pulsante.disabled = false;
+
+        pulsante.textContent =
+            "Salva e Invia";
+
+    }
+
+}
+
+function mostraRingraziamento() {
+
+    document
+        .getElementById("paginaRiepilogo")
+        .classList.add("nascosto");
+
+    document
+        .getElementById("paginaCompletata")
+        .classList.remove("nascosto");
 
 }
