@@ -449,9 +449,9 @@ async function salvaInvia() {
         "Salvataggio in corso...";
 
     const agentiInseriti =
-    document
-        .getElementById("contenitoreAgenti")
-        .querySelectorAll(".blocco-agente");
+        document
+            .getElementById("contenitoreAgenti")
+            .querySelectorAll(".blocco-agente");
 
     const elencoAgenti = [];
 
@@ -526,6 +526,9 @@ async function salvaInvia() {
 
     try {
 
+        console.log("Payload inviato:");
+        console.log(payload);
+
         const risposta =
             await fetch(
                 FLOW_URL,
@@ -538,16 +541,17 @@ async function salvaInvia() {
                 }
             );
 
-       console.log("STATUS FLOW:", risposta.status);
+        console.log(
+            "STATUS FLOW:",
+            risposta.status
+        );
 
-if (!risposta.ok) {
+        if (!risposta.ok) {
 
-    throw new Error(
-        "HTTP " +
-        risposta.status
-    );
-
-}
+            throw new Error(
+                "HTTP " +
+                risposta.status
+            );
 
         }
 
@@ -556,31 +560,18 @@ if (!risposta.ok) {
     }
     catch (errore) {
 
-    console.error(errore);
+        console.error(errore);
 
-    alert(
-        "ERRORE:\n" +
-        errore.toString()
-    );
+        alert(
+            "ERRORE:\n" +
+            errore.toString()
+        );
 
-}
         pulsante.disabled = false;
 
         pulsante.textContent =
             "Salva e Invia";
 
     }
-
-}
-
-function mostraRingraziamento() {
-
-    document
-        .getElementById("paginaRiepilogo")
-        .classList.add("nascosto");
-
-    document
-        .getElementById("paginaCompletata")
-        .classList.remove("nascosto");
 
 }
