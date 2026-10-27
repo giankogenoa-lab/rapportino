@@ -530,8 +530,13 @@ async function salvaInvia() {
 
     try {
 
-        console.log("Payload inviato:");
-        console.log(payload);
+        console.log(
+    JSON.stringify(
+        payload,
+        null,
+        2
+    )
+);
 
         const risposta =
             await fetch(
