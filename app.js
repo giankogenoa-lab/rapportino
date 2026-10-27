@@ -37,10 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document
     .getElementById("nuovoRapportino")
-    .addEventListener(
+    if (btnNuovo) {
+
+    btnNuovo.addEventListener(
         "click",
         () => location.reload()
     );
+
+}
 
 });
 
