@@ -571,11 +571,9 @@ async function salvaInvia() {
 
         console.error(errore);
 
-        alert(
-            "ERRORE:\n" +
-            errore.toString()
-        );
-
+        const testo = await risposta.text();
+console.log(testo);
+        
         pulsante.disabled = false;
 
         pulsante.textContent =
