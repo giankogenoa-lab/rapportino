@@ -1,8 +1,5 @@
 let agenti = [];
 
-const FLOW_URL =
-    "https://7dafc5c20598eafc8ec5d1d6346e55.5a.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/884d26fa010c4c30bc7964c6867b3add/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OmLyahrIU5ngbdgSk-l2UTcSxKcFqhJC781Gvcp9vTs";
-
 fetch("agenti.json")
     .then(response => response.json())
     .then(data => {
@@ -443,14 +440,15 @@ function tornaModifica() {
 
 }
 
-async function salvaInvia() {
+function salvaInvia() {
 
     const pulsante =
         document.getElementById("salvaInvia");
 
     pulsante.disabled = true;
+
     pulsante.textContent =
-        "Salvataggio in corso...";
+        "Generazione file...";
 
     const agentiInseriti =
         document
@@ -476,7 +474,7 @@ async function salvaInvia() {
                 agente.querySelector(".turno").value,
 
             straordinario:
-                agente.querySelector(".straordinario").value,
+                agente.querySelector(".straordinario").value || "",
 
             chrep:
                 agente.querySelector(".chrep").checked,
@@ -509,76 +507,81 @@ async function salvaInvia() {
     const payload = {
 
         dataRiferimento:
-            document.getElementById("dataRiferimento").value,
+            document
+                .getElementById("dataRiferimento")
+                .value,
 
         nomeRichiedente:
-            document.getElementById("nomeRichiedente").value,
+            document
+                .getElementById("nomeRichiedente")
+                .value,
 
         cognomeRichiedente:
-            document.getElementById("cognomeRichiedente").value,
+            document
+                .getElementById("cognomeRichiedente")
+                .value,
 
         cidRichiedente:
-            document.getElementById("cidRichiedente").value,
+            document
+                .getElementById("cidRichiedente")
+                .value,
 
         note:
-            document.getElementById("note").value,
+            document
+                .getElementById("note")
+                .value,
 
         agenti:
             elencoAgenti
 
     };
 
-    try {
-
-        console.log(
-    JSON.stringify(
-        payload,
-        null,
-        2
-    )
-);
-
-        const risposta =
-            await fetch(
-                FLOW_URL,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
-                }
-            );
-
-        console.log(
-            "STATUS FLOW:",
-            risposta.status
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    payload,
+                    null,
+                    2
+                )
+            ],
+            {
+                type: "application/json"
+            }
         );
 
-        if (!risposta.ok) {
+    const nomeFile =
+        `Rapportino_${Date.now()}.json`;
 
-            throw new Error(
-                "HTTP " +
-                risposta.status
-            );
+    const link =
+        document.createElement("a");
 
-        }
+    link.href =
+        URL.createObjectURL(blob);
 
-        mostraRingraziamento();
+    link.download =
+        nomeFile;
 
-    }
-    catch (errore) {
+    document.body.appendChild(link);
 
-        console.error(errore);
+    link.click();
 
-        const testo = await risposta.text();
-console.log(testo);
-        
-        pulsante.disabled = false;
+    document.body.removeChild(link);
 
-        pulsante.textContent =
-            "Salva e Invia";
+    URL.revokeObjectURL(link.href);
 
-    }
+    mostraRingraziamento();
 
+}
+
+function mostraRingraziamento() {
+ 
+document
+.getElementById("paginaRiepilogo")
+.classList.add("nascosto");
+ 
+document
+.getElementById("paginaCompletata")
+.classList.remove("nascosto");
+ 
 }
